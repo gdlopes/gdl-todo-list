@@ -1,10 +1,16 @@
-import TaskRepository from '../repositories/TaskRepository';
+import { injectable, inject } from 'tsyringe';
 
+import ITaskRepository from '../repositories/ITaskRepository';
+
+@injectable()
 class CreateTaskService {
-  public async execute({ description, date, done }) {
-    const taskRepository = new TaskRepository();
+  constructor(
+    @inject('TaskRepository')
+    private taskRepository: ITaskRepository,
+  ) { }
 
-    const task = await taskRepository.create({
+  public async execute({ description, date, done }) {
+    const task = await this.taskRepository.create({
       description,
       date,
       done

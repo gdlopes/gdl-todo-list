@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
 import CreateTaskService from '../services/CreateTaskService';
 import ListTasksService from '../services/ListTasksService';
@@ -7,7 +8,7 @@ import DeleteTaskService from '../services/DeleteTaskService';
 
 export default class TaskController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const listTasksService = new ListTasksService();
+    const listTasksService = container.resolve(ListTasksService);
 
     const tasks = await listTasksService.execute();
 
@@ -17,7 +18,7 @@ export default class TaskController {
   public async create(request: Request, response: Response): Promise<Response> {
     const { description, date, done } = request.body;
 
-    const createTaskService = new CreateTaskService();
+    const createTaskService = container.resolve(CreateTaskService);
 
     const task = await createTaskService.execute({
       description,
@@ -32,7 +33,7 @@ export default class TaskController {
     const { id } = request.params;
     const body = request.body;
 
-    const updateTaskService = new UpdateTaskService();
+    const updateTaskService = container.resolve(UpdateTaskService);
 
     const task = await updateTaskService.execute({
       _id: id,
@@ -45,7 +46,7 @@ export default class TaskController {
   public async delete(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const deleteTaskService = new DeleteTaskService();
+    const deleteTaskService = container.resolve(DeleteTaskService);
 
     await deleteTaskService.execute(id);
 

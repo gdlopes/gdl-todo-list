@@ -1,18 +1,24 @@
-import TaskRepository from '../repositories/TaskRepository';
+import { injectable, inject } from 'tsyringe';
+
+import ITaskRepository from '../repositories/ITaskRepository';
 
 import AppError from '../middlewares/AppError';
 
+@injectable()
 class DeleteTaskService {
-  public async execute(id) {
-    const taskRepository = new TaskRepository();
+  constructor(
+    @inject('TaskRepository')
+    private taskRepository: ITaskRepository,
+  ) { }
 
-    const taskExists = await taskRepository.findById(id);
+  public async execute(id) {
+    const taskExists = await this.taskRepository.findById(id);
 
     if (!taskExists) {
       throw new AppError('This task does not exists.');
     }
 
-    return taskRepository.delete(id);
+    return this.taskRepository.delete(id);
   }
 }
 

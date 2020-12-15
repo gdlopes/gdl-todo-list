@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 
@@ -5,6 +7,8 @@ import mongoose from 'mongoose';
 import { router } from './routes';
 
 import AppError from './middlewares/AppError';
+
+import './container';
 
 const app = express();
 
