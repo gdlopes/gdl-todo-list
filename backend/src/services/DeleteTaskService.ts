@@ -11,7 +11,7 @@ class DeleteTaskService {
     private taskRepository: ITaskRepository,
   ) { }
 
-  public async execute(id) {
+  public async execute(id: string) {
     const taskExists = await this.taskRepository.findById(id);
 
     if (!taskExists) {

@@ -18,13 +18,13 @@ class TaskRepository implements ITaskRepository {
     return task;
   }
 
-  public async findById(id: string): Promise<ITask | undefined> {
+  public async findById(id: string): Promise<ITask | null> {
     const findTask = await Task.findOne({ _id: id });
 
     return findTask;
   }
 
-  public async update(data: IUpdateTaskDTO): Promise<ITask> {
+  public async update(data: IUpdateTaskDTO): Promise<ITask | null> {
     const { _id } = data;
 
     const updatedTask = await Task.findByIdAndUpdate(_id, data, { new: true });
@@ -32,7 +32,7 @@ class TaskRepository implements ITaskRepository {
     return updatedTask;
   }
 
-  public async delete(id: string): Promise<ITask> {
+  public async delete(id: string): Promise<ITask | null> {
     return Task.findByIdAndDelete(id);
   }
 }

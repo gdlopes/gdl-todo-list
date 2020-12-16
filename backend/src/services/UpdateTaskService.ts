@@ -1,6 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
 import ITaskRepository from '../repositories/ITaskRepository';
+import IUpdateTaskDTO from '../dtos/IUpdateTaskDTO';
 
 import AppError from '../middlewares/AppError';
 
@@ -11,7 +12,7 @@ class UpdateTaskService {
     private taskRepository: ITaskRepository,
   ) { }
 
-  public async execute(data) {
+  public async execute(data: IUpdateTaskDTO) {
     const { _id } = data;
 
     const taskExists = await this.taskRepository.findById(_id);
