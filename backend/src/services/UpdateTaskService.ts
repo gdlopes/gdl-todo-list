@@ -16,6 +16,7 @@ class UpdateTaskService {
     const { _id } = data;
 
     const taskExists = await this.taskRepository.findById(_id);
+
     if (!taskExists) throw new AppError('This task does not exists.');
 
     const updatedTask = await this.taskRepository.update(data);
